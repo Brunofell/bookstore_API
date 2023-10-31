@@ -2,6 +2,7 @@ package com.bruno.bookstore.services;
 
 import java.util.Optional;
 
+import java.util.List;
 import com.bruno.bookstore.domain.Categoria;
 import com.bruno.bookstore.exceptions.ObjectNotFoundException;
 import com.bruno.bookstore.repository.CategoriaRepository;
@@ -17,5 +18,9 @@ public class CategoriaService {
     public Categoria findById(Integer id){
         Optional<Categoria> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + ", Tipo: " + Categoria.class.getName()));
+    }
+
+    public List<Categoria> findAll(){
+        return repository.findAll();
     }
 }
