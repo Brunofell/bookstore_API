@@ -1,5 +1,6 @@
 package com.bruno.bookstore.services;
 
+import com.bruno.bookstore.config.DevConfig;
 import com.bruno.bookstore.domain.Categoria;
 import com.bruno.bookstore.domain.Livro;
 import com.bruno.bookstore.repository.CategoriaRepository;
@@ -31,4 +32,5 @@ public class DBService {
         this.categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         this.livroRepository.saveAll(Arrays.asList(l1,l2, l3, l4));
     }
+
 }
