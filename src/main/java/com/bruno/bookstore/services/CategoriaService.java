@@ -3,6 +3,8 @@ package com.bruno.bookstore.services;
 import java.util.Optional;
 
 import java.util.List;
+
+import com.bruno.bookstore.DTOs.CategoriaDTO;
 import com.bruno.bookstore.domain.Categoria;
 import com.bruno.bookstore.exceptions.ObjectNotFoundException;
 import com.bruno.bookstore.repository.CategoriaRepository;
@@ -26,6 +28,14 @@ public class CategoriaService {
 
     public Categoria create(Categoria obj){
         obj.setId(null);
+        return repository.save(obj);
+    }
+
+
+    public Categoria create(Integer id, CategoriaDTO objDTO) {
+        Categoria obj = findById(id);
+        obj.setNome(objDTO.getNome());
+        obj.setDescricao(objDTO.getDescricao());
         return repository.save(obj);
     }
 }
