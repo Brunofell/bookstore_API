@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.bruno.bookstore.DTOs.CategoriaDTO;
 import com.bruno.bookstore.domain.Categoria;
+import com.bruno.bookstore.exceptions.DataIntegrityViolationException;
 import com.bruno.bookstore.exceptions.ObjectNotFoundException;
 import com.bruno.bookstore.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class CategoriaService {
 
     public Categoria findById(Integer id){
         Optional<Categoria> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + ", Tipo: " + Categoria.class.getName()));
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! ID: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
     public List<Categoria> findAll(){
@@ -42,6 +44,12 @@ public class CategoriaService {
 
     public void delete(Integer id) {
         findById(id);
-        repository.deleteById(id);
+        try{
+            repository.deleteById(id);
+        }catch (org.springframework.dao.DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException(
+                    "Categoria não pode ser deletado! Possui livros associados.");
+        }
+
     }
 }
