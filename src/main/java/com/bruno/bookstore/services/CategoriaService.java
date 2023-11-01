@@ -32,10 +32,16 @@ public class CategoriaService {
     }
 
 
-    public Categoria create(Integer id, CategoriaDTO objDTO) {
+    public Categoria update(Integer id, CategoriaDTO objDTO) {
         Categoria obj = findById(id);
         obj.setNome(objDTO.getNome());
         obj.setDescricao(objDTO.getDescricao());
         return repository.save(obj);
+    }
+
+
+    public void delete(Integer id) {
+        findById(id);
+        repository.deleteById(id);
     }
 }
