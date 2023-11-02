@@ -8,10 +8,7 @@ import com.bruno.bookstore.services.CategoriaService;
 import com.bruno.bookstore.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,9 +25,11 @@ public class LivroResources {
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping
-    public ResponseEntity<List<LivroDTO>> findAll(){
-        List<Livro> list = service.findAll();
+    // So vai achar libros pela categoria, omite o autor e texto: localhost:8080/livros?categoria=1
+    @GetMapping // PRO PADRAO DTO.
+    public ResponseEntity<List<LivroDTO>> findAll(
+            @RequestParam(value = "categoria", defaultValue = "0") Integer id_cat){
+        List<Livro> list = service.findAll(id_cat);
         List<LivroDTO> listDTO = list.stream().map(obj -> new LivroDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
