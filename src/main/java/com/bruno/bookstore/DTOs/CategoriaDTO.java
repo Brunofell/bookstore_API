@@ -1,13 +1,21 @@
 package com.bruno.bookstore.DTOs;
 
 import com.bruno.bookstore.domain.Categoria;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
 public class CategoriaDTO implements Serializable {
     private Integer id;
+    @NotEmpty(message= "Campo NOME requerido!")
+    @Length(min = 3, max = 100, message = "O campo nome deve ter entre 3 e 100 caracteres.")
     private String nome;
+
+    @NotEmpty(message= "Campo DESCRICAO requerido!")
+    @Length(min = 3, max = 200, message = "O campo DESCRICAO deve ter entre 3 e 200 caracteres.")
     private String descricao;
+
 
     public CategoriaDTO() {
     }
