@@ -25,13 +25,25 @@ public class LivroResources {
         return ResponseEntity.ok().body(obj);
     }
 
-    // So vai achar libros pela categoria, omite o autor e texto: localhost:8080/livros?categoria=1
+    // So vai achar livros pela categoria, omite o autor e texto: localhost:8080/livros?categoria=1
     @GetMapping // PRO PADRAO DTO.
     public ResponseEntity<List<LivroDTO>> findAll(
             @RequestParam(value = "categoria", defaultValue = "0") Integer id_cat){
         List<Livro> list = service.findAll(id_cat);
         List<LivroDTO> listDTO = list.stream().map(obj -> new LivroDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> update(@PathVariable Integer id, @RequestBody Livro obj){
+        Livro newObj = service.update(id, obj);
+        return ResponseEntity.ok().body(newObj);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Livro> updatePatch(@PathVariable Integer id, @RequestBody Livro obj){
+        Livro newObj = service.update(id, obj);
+        return ResponseEntity.ok().body(newObj);
     }
 
 }
